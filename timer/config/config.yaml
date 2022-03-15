@@ -1,0 +1,4 @@
+quay:
+  user: xxx
+  password: xxxx
+slack_message_url: xxxx
