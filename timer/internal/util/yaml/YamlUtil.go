@@ -18,12 +18,16 @@ type config struct {
 		Password string `yaml:"password"`
 	} `yaml:"quay"`
 	SlackMessageUrl string `yaml:"slack_message_url"`
+	BuildConfig     []struct {
+		OcpRelease   string `yaml:"ocp_release"`
+		ContainerTag string `yaml:"container_tag"`
+	} `yaml:"build_config"`
 }
 
 func Init(filePath string) {
 	var erro error
 	yamlFile, erro := ioutil.ReadFile(filePath)
-	err.GetErr("无法读取客户端文件", erro)
+	err.GetErr("can't read config yaml", erro)
 	erro = yaml.Unmarshal(yamlFile, &conf)
-	err.GetErr("解析yaml错误", erro)
+	err.GetErr("yaml error", erro)
 }
