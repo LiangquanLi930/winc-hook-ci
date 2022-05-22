@@ -10,17 +10,15 @@ import (
 )
 
 func init() {
-	log.Config(log.Stdout, log.Stdout, log.Stdout|log.EnableFile, log.Stderr|log.EnableFile, "/Users/redhat/GolandProjects/winc-hook-ci/error.log")
-	yaml.Init("/Users/redhat/GolandProjects/winc-hook-ci/config.yaml")
-	//log.Config(log.Stdout, log.Stdout, log.Stdout|log.EnableFile, log.Stderr|log.EnableFile, "./error.log")
-	//yaml.Init("./config.yaml")
+	log.Config(log.Stdout, log.Stdout, log.Stdout|log.EnableFile, log.Stderr|log.EnableFile, "./error.log")
+	yaml.Init("./config.yaml")
 }
 
 func main() {
 	log.Info.Println(yaml.GetConfig())
 	c := cron.New()
 	//spec := "0 0 */1 * * ?"
-	spec := "0 0 4 * * ?"
+	spec := "0 0 3 * * ?"
 	err := c.AddFunc(spec, func() {
 		log.Info.Println("start cron job")
 		for _, buildConfig := range yaml.GetConfig().BuildConfig {
@@ -31,9 +29,10 @@ func main() {
 			if err != nil {
 				log.Warning.Println(trimmed)
 				slack.SendSlack("build image error:" + err.Error())
+			}else {
+				slack.SendSlack("build new winc image: quay.io/winc/wmco-index:" + buildConfig.ContainerTag)
 			}
 			log.Info.Println("job finish")
-			slack.SendSlack("build new winc image: quay.io/winc/wmco-index:" + buildConfig.ContainerTag)
 		}
 	})
 	if err != nil {
