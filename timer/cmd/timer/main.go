@@ -30,7 +30,7 @@ func main() {
 				log.Warning.Println(trimmed)
 				slack.SendSlack("build image error:" + err.Error())
 			}else {
-				slack.SendSlack("build new winc image: quay.io/winc/wmco-index:" + buildConfig.ContainerTag)
+				log.Info.Println("build new winc image: quay.io/winc/wmco-index:" + buildConfig.ContainerTag)
 			}
 			log.Info.Println("job finish")
 		}
