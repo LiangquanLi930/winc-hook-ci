@@ -18,6 +18,7 @@ type config struct {
 		Password string `yaml:"password"`
 	} `yaml:"quay"`
 	SlackMessageUrl string `yaml:"slack_message_url"`
+	Notification    string `yaml:"notification"`
 	BuildConfig     []struct {
 		OcpRelease   string `yaml:"ocp_release"`
 		ContainerTag string `yaml:"container_tag"`
