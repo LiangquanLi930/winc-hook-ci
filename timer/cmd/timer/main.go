@@ -38,7 +38,7 @@ func main() {
 			log.Info.Println(trimmed)
 			if err != nil {
 				log.Warning.Println(trimmed)
-				slack.SendSlack("build image error:" + err.Error())
+				slack.SendSlack("build image 'quay.io/winc/wmco-index" + buildConfig.ContainerTag + "' error:" + err.Error())
 			} else {
 				if strings.Compare(yaml.GetConfig().Notification, "yes") == 0 {
 					slack.SendSlack("build new winc image: quay.io/winc/wmco-index:" + buildConfig.ContainerTag)
